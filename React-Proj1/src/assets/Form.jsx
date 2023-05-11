@@ -6,7 +6,13 @@ export default function Form(props){
         {name:'', job:'', country:'', age:'', netWorth:''}
     )
 
-   
+    const [formError, setFormError] = React.useState({
+        nameError: false,
+        ageError: false,
+        jobError: false,
+        countryError: false,
+        netWorthError: false
+    })
 
     // handle change
     function handleChange(e){
@@ -18,8 +24,6 @@ export default function Form(props){
         })
     }
 
-    
-
     // handle submit
     const isValid = formData.age != '' && formData.name != '' && formData.job != '' && formData.country != '' && formData.netWorth != '';
 
@@ -27,7 +31,53 @@ export default function Form(props){
         event.preventDefault()
         if(isValid){
             props.myFunc(formData)
-        } 
+        } if(formData.age === ''){
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                ageError: true
+            }
+            })
+        }if(formData.job === ''){
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                jobError: true
+            }
+            })
+        }if(formData.country === ''){
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                countryError: true
+            }
+            })
+        }if(formData.name === ''){
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                nameError: true
+            }
+            })
+        }if(formData.netWorth === ''){
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                netWorthError: true
+            }
+            })
+        }else{
+            setFormError(prevState => {
+                return{
+                ...prevState,
+                netWorthError: false,
+                ageError: false,
+                nameError: false,
+                jobError: false,
+                countryError:false,
+                }
+            })
+        }
         setFormData({name:'', job:'', country:'', age:'', netWorth:''})
     }
 
@@ -39,11 +89,11 @@ export default function Form(props){
             <input type="text" name="age" placeholder='Age' value = {formData.age} onChange={handleChange}/>
             <input type="text" name="netWorth" placeholder='Net Worth' value = {formData.netWorth} onChange={handleChange} />
             <button>Add User</button>
-            {formData.age === '' && <h4>Please fill out Age field</h4>}
-            {formData.name === '' && <h4>Please fill out Name field</h4>}
-            {formData.country === '' && <h4>Please fill out Country field</h4>}
-            {formData.netWorth === '' && <h4>Please fill out Net worth field</h4>}
-            {formData.job === '' && <h4>Please fill out Job field</h4>}
+            {formError.ageError && <h4>Please fill out Age field</h4>}
+            {formError.nameError && <h4>Please fill out Name field</h4>}
+            {formError.countryError && <h4>Please fill out Country field</h4>}
+            {formError.netWorthError && <h4>Please fill out Net worth field</h4>}
+            {formError.jobError  && <h4>Please fill out Job field</h4>}
         </form>
     )
 }
