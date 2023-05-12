@@ -5,10 +5,10 @@ export default function Card(props){
     return(
      <div className='card'>
         <h3>{props.name}</h3>
-        <p>Job: {props.job} </p>
-        <p>Counrty: {props.country}</p>
-        <p>Age: {props.age}</p>
-        <p>Net Worth: {props.netWorth}</p>
+        <p> <strong>Job:</strong> {props.job} </p>
+        <p><strong>Counrty:</strong> {props.country}</p>
+        <p><strong>Age:</strong> {props.age}</p>
+        <p><strong>Net Worth:</strong> {props.netWorth}</p>
      </div>
         
     );
