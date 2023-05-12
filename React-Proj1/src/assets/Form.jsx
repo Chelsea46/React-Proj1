@@ -29,43 +29,26 @@ export default function Form(props){
 
     function handleSubmit(event){
         event.preventDefault()
+        const errors = {
+            name: false,
+            age: false,
+            job: false,
+            country: false,
+            netWorth: false
+        }
         if(isValid){
             props.myFunc(formData)
+            setFormData({name:'', job:'', country:'', age:'', netWorth:''})
         } if(formData.age === ''){
-            setFormError(prevState => {
-                return{
-                ...prevState,
-                ageError: true
-            }
-            })
+          errors.age = true
         }if(formData.job === ''){
-            setFormError(prevState => {
-                return{
-                ...prevState,
-                jobError: true
-            }
-            })
+            errors.job = true
         }if(formData.country === ''){
-            setFormError(prevState => {
-                return{
-                ...prevState,
-                countryError: true
-            }
-            })
+            errors.country = true
         }if(formData.name === ''){
-            setFormError(prevState => {
-                return{
-                ...prevState,
-                nameError: true
-            }
-            })
+            errors.name = true
         }if(formData.netWorth === ''){
-            setFormError(prevState => {
-                return{
-                ...prevState,
-                netWorthError: true
-            }
-            })
+            errors.netWorth = true
         }else{
             setFormError(prevState => {
                 return{
@@ -78,7 +61,15 @@ export default function Form(props){
                 }
             })
         }
-        setFormData({name:'', job:'', country:'', age:'', netWorth:''})
+        setFormError(prevState => {
+            return {...prevState,
+                netWorthError: errors.netWorth,
+                ageError: errors.age,
+                nameError: errors.name,
+                jobError: errors.job,
+                countryError: errors.country
+            }
+        });
     }
 
     return(
